@@ -1,0 +1,15 @@
+Material My Material : Common/MatDefs/Light/PBRLighting.j3md {
+     MaterialParameters {
+        ParallaxHeight :  0.05
+        BackfaceShadows :  false
+        Metallic : 0.59999996
+        Roughness : 0.3
+        BaseColor : 0.4 0.4 0.4 1.0
+        EmissivePower :  3.0
+        EmissiveIntensity :  2.0
+        Glossiness :  1.0
+        UseSpecularAA :  true
+     }
+    AdditionalRenderState {
+    }
+}
