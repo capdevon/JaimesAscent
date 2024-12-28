@@ -18,6 +18,7 @@ A simple tech demo made with [jMonkeyEngine](https://jmonkeyengine.org/)
 - WASD: Basic movements
 - SPACEBAR: Jump
 - CAMERA: Use the mouse to orient the camera
+- P: Pause
 - KEY_0: Toggle Physics Debug
 
 ## Requirements
