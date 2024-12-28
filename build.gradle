@@ -3,8 +3,8 @@ plugins {
     id 'application'
 }
 
-group 'jme3test.jaimesascent'
-version '1.1.0'
+group 'com.mygame'
+version '1.0.0'
 
 application {
     applicationName = 'JaimesAscent'
@@ -21,7 +21,7 @@ repositories {
 }
 
 project.ext {
-  jmeVer = '3.7.0-stable'
+    jmeVer = '3.7.0-stable'
 }
 
 project(":assets") {
@@ -39,34 +39,41 @@ project(":assets") {
 
     java {
         toolchain {
-            languageVersion = JavaLanguageVersion.of(21)
+            languageVersion = JavaLanguageVersion.of(17)
         }
     }
 }
 
 dependencies {
-
-  // Core JME
-  implementation "org.jmonkeyengine:jme3-core:$jmeVer"
-  implementation "org.jmonkeyengine:jme3-desktop:$jmeVer"
-  // Mac OS with LWJGL 3 doesn't allow AWT/Swing
-  if (!System.getProperty("os.name").toLowerCase().contains("mac")) {
-    implementation "org.jmonkeyengine:jme3-awt-dialogs:$jmeVer"
-  }
-  implementation "org.jmonkeyengine:jme3-lwjgl3:$jmeVer"
-
-  // Suppress errors / warnings building in SDK
-  implementation "org.jmonkeyengine:jme3-jogg:$jmeVer"
-  implementation "org.jmonkeyengine:jme3-plugins:$jmeVer"
-  
-  // Physics Library
-  implementation "com.github.stephengold:Minie:8.0.0"
-
-  // Additional Libraries
-  implementation "com.github.stephengold:Heart:9.0.0"
-
-  // Assets sub-project
-  runtimeOnly project(':assets')
+    
+    // Core JME
+    implementation "org.jmonkeyengine:jme3-core:$jmeVer"
+    implementation "org.jmonkeyengine:jme3-desktop:$jmeVer"
+    implementation "org.jmonkeyengine:jme3-effects:$jmeVer"
+    
+    // Mac OS with LWJGL 3 doesn't allow AWT/Swing
+    if (!System.getProperty("os.name").toLowerCase().contains("mac")) {
+        runtimeOnly "org.jmonkeyengine:jme3-awt-dialogs:$jmeVer"
+    }
+    runtimeOnly "org.jmonkeyengine:jme3-lwjgl3:$jmeVer" // lwjgl3
+    
+    // Suppress errors / warnings building in SDK
+    runtimeOnly "org.jmonkeyengine:jme3-jogg:$jmeVer"
+    runtimeOnly "org.jmonkeyengine:jme3-plugins:$jmeVer"
+    
+    runtimeOnly 'org.jmonkeyengine:jme3-testdata:3.4.0-alpha6'
+    
+    // Additional Libraries
+    implementation 'com.github.stephengold:Minie:8.2.0+big4'
+    
+    // GUI Libraries
+    implementation 'com.simsilica:lemur:1.16.0'
+    implementation 'com.simsilica:lemur-props:1.2.0'
+    implementation 'com.simsilica:lemur-proto:1.13.0'
+    runtimeOnly 'org.codehaus.groovy:groovy-jsr223:3.0.19'
+    
+    // Assets sub-project
+    runtimeOnly project(':assets')
 }
 
 jar {
@@ -77,10 +84,10 @@ jar {
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
+        languageVersion = JavaLanguageVersion.of(17)
     }
 }
 
 wrapper {
-    gradleVersion = '8.6'
+    gradleVersion = '8.4'
 }

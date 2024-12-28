@@ -29,34 +29,30 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package jme3test.jaimesascent;
+package jme3test.jaimesascent.ui;
 
-import com.jme3.math.Vector3f;
-import com.jme3.renderer.RenderManager;
-import com.jme3.renderer.ViewPort;
-import com.jme3.scene.control.AbstractControl;
+import com.jme3.math.ColorRGBA;
+import com.jme3.texture.Texture;
+import com.simsilica.lemur.GuiGlobals;
+import com.simsilica.lemur.component.QuadBackgroundComponent;
 
 /**
- *
- * Spins propellers
- *
- * @author rickard
+ * @author wil
  */
-public class PropellerControl extends AbstractControl {
+public class UIImage extends QuadBackgroundComponent {
+
+    public UIImage(String texture) {
+        this(texture, null);
+    }
+
+    public UIImage(String texture, ColorRGBA color) {
+        this(GuiGlobals.getInstance().loadTexture(texture, true, false), color);
+    }
     
-    private final Vector3f axis;
-    
-    public PropellerControl(Vector3f axis) {
-        this.axis = axis;
+    public UIImage(Texture texture, ColorRGBA color) {
+        super(texture);
+        if (color != null) {
+            setColor(color);
+        }
     }
-
-    @Override
-    protected void controlUpdate(float tpf) {
-        spatial.rotate(axis.x * tpf, axis.y * tpf, axis.z * tpf);
-    }
-
-    @Override
-    protected void controlRender(RenderManager rm, ViewPort vp) {
-    }
-
 }

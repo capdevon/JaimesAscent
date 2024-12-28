@@ -31,10 +31,21 @@
  */
 package jme3test.jaimesascent;
 
-import com.jme3.app.SimpleApplication;
+import jme3test.jaimesascent.states.SceneState;
+import jme3test.jaimesascent.states.GameState;
+import com.jme3.app.FlyCamAppState;
 import com.jme3.bullet.BulletAppState;
+import com.jme3.cursors.plugins.JmeCursor;
 import com.jme3.renderer.RenderManager;
 import com.jme3.system.AppSettings;
+import com.jme3.system.JmeVersion;
+import com.jme3.texture.Image;
+import com.jme3.texture.Texture;
+import com.jme3.util.BufferUtils;
+import java.nio.ByteBuffer;
+import java.nio.IntBuffer;
+import jme3test.jaimesascent.screen.GameScreen;
+import jme3test.jaimesascent.ui.LemurGuiStyle;
 
 /**
  * Chasecam example game with animations, physics and mouse look. Use the mouse
@@ -42,17 +53,22 @@ import com.jme3.system.AppSettings;
  *
  * @author rickard
  */
-public class Main extends SimpleApplication {
+public class Main extends GameApplication {
 
-    private BulletAppState bulletAppState;
-    private SceneState sceneState;
-    private GameState gameState;
-
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         Main app = new Main();
         AppSettings settings = new AppSettings(true);
-        settings.setRenderer(AppSettings.LWJGL_OPENGL33);
-        settings.setAudioRenderer(AppSettings.LWJGL_OPENAL);
+        settings.setTitle("Jaime Jump: " + JmeVersion.FULL_NAME);
+        settings.setResolution(1280, 720);
+        settings.setFrameRate(120);
+        settings.setUseJoysticks(true);
+//        settings.setRenderer(AppSettings.LWJGL_OPENGL32);
+//        settings.setAudioRenderer(AppSettings.LWJGL_OPENAL);
+        app.setShowSettings(false);
         app.setSettings(settings);
 
         app.start();
@@ -60,12 +76,20 @@ public class Main extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
-        bulletAppState = new BulletAppState();
-        gameState = new GameState(bulletAppState);
-        sceneState = new SceneState(bulletAppState);
-        stateManager.attach(bulletAppState);
-        stateManager.attach(gameState);
-        stateManager.attach(sceneState);
+        // disable the default 1st-person flyCam!
+        stateManager.detach(stateManager.getState(FlyCamAppState.class));
+        flyCam.setEnabled(false);
+        
+        JmeCursor cursor = createJmeCursor("Interface/UI/cursor_g.png");
+        inputManager.setMouseCursor(cursor);
+
+        LemurGuiStyle.initialize(this);
+
+        stateManager.attach(new BulletAppState());
+        stateManager.attach(new PhysxDebugState());
+        stateManager.attach(new GameScreen());
+        stateManager.attach(new SceneState());
+        stateManager.attach(new GameState());
     }
 
     @Override
@@ -74,5 +98,28 @@ public class Main extends SimpleApplication {
 
     @Override
     public void simpleRender(RenderManager rm) {
+    }
+    
+    protected JmeCursor createJmeCursor(String path) {
+        Texture texture = assetManager.loadTexture(path);
+
+        Image image = texture.getImage();
+        ByteBuffer imgByteBuff = (ByteBuffer) image.getData(0).rewind();
+        IntBuffer curIntBuff = BufferUtils.createIntBuffer(image.getHeight() * image.getWidth());
+
+        while (imgByteBuff.hasRemaining()) {
+            int rgba = imgByteBuff.getInt();
+            /*int argb = ((rgba & 255) << 24) | (rgba >> 8);*/
+            curIntBuff.put(rgba);
+        }
+
+        JmeCursor cursor = new JmeCursor();
+        cursor.setHeight(image.getHeight());
+        cursor.setWidth(image.getWidth());
+        cursor.setNumImages(1);
+        cursor.setyHotSpot(image.getHeight() - 3);
+        cursor.setxHotSpot(3);
+        cursor.setImagesData((IntBuffer) curIntBuff.rewind());
+        return cursor;
     }
 }

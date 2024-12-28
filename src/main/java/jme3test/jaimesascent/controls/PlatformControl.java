@@ -1,8 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package jme3test.jaimesascent;
+package jme3test.jaimesascent.controls;
 
 import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
@@ -17,24 +13,40 @@ import com.jme3.scene.control.AbstractControl;
 public class PlatformControl extends AbstractControl {
 
     private boolean directionUp = false;
-    private final float maxDistance = 2f;
-    private final float velocity = 1f;
+    private float maxDistance = 2f;
+    private float velocity = 1f;
 
     @Override
     protected void controlUpdate(float tpf) {
         if (directionUp && spatial.getLocalTranslation().y < maxDistance) {
             spatial.move(0, velocity * tpf, 0);
-            return;
-        }
-        if (!directionUp && spatial.getLocalTranslation().y > -maxDistance) {
+            
+        } else if (!directionUp && spatial.getLocalTranslation().y > -maxDistance) {
             spatial.move(0, -velocity * tpf, 0);
-            return;
+            
+        } else {
+            directionUp = !directionUp;
         }
-        directionUp = !directionUp;
     }
 
     @Override
     protected void controlRender(RenderManager rm, ViewPort vp) {
+    }
+
+    public float getMaxDistance() {
+        return maxDistance;
+    }
+
+    public void setMaxDistance(float maxDistance) {
+        this.maxDistance = maxDistance;
+    }
+
+    public float getVelocity() {
+        return velocity;
+    }
+
+    public void setVelocity(float velocity) {
+        this.velocity = velocity;
     }
 
 }
