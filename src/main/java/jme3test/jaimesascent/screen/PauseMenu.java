@@ -68,7 +68,7 @@ public class PauseMenu extends Window {
         getRootPane().addChild(leftPanel, ControlLayout.Alignment.LeftCenter, false);
 
         // create labels
-        Label title = createLabel("Jaime Jump", labelFont);
+        Label title = createLabel("JaimesAscent", labelFont);
         title.setPreferredSize(new Vector3f(leftPanel.getPreferredSize().x - 25, 50, 0));
         title.setColor(ColorRGBA.White);
 
