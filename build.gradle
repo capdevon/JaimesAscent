@@ -36,12 +36,6 @@ project(":assets") {
             }
         }
     }
-
-    java {
-        toolchain {
-            languageVersion = JavaLanguageVersion.of(17)
-        }
-    }
 }
 
 dependencies {
@@ -79,12 +73,6 @@ dependencies {
 jar {
     manifest {
         attributes 'Main-Class': application.mainClass
-    }
-}
-
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
     }
 }
 
