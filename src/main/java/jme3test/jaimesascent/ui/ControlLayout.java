@@ -15,6 +15,10 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * 
+ * @author wil
+ */
 public class ControlLayout extends AbstractGuiComponent implements GuiLayout {
 
     /**
@@ -746,7 +750,6 @@ public class ControlLayout extends AbstractGuiComponent implements GuiLayout {
      * (non-JavaDoc)
      *
      * @see GuiLayout#getChildren()
-     * @see CardLayout#getLayoutChildren()
      *
      * @return list
      */
