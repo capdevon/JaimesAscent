@@ -15,44 +15,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- * A `ControlLayout` object is a controlled layout manager.
- * <p>
- * It treats each control independently with respect to the parent component.
- * <p>
- * This layout allows components to be positioned freely in the plane relative
- * to a specified alignment. This is ideal for resizing components or adapting
- * them to different screen resolutions.
- * <p>
- * The `ControlLayout` is ideal for creating user interface components that run
- * on different platforms, i.e., on different screen resolutions as they adapt
- * to them.
- * <p>
- * To initialize a layout control, it is sufficient to instantiate an object of
- * this class, defining an ideal resolution for the program's execution.
- *
- * FOR EXAMPLE:
- * <pre><code>
- * public class GuiApplication extends SimpleApplication {
- *  @Override
- *  public void simpleInitApp() {
- *   ...
- *   Container rootPane = new Container();
- *   guiNode.attachChild(rootPane);
- *
- *   ControlLayout controlLayout = new ControlLayout(ControlLayout.onCreateRootPane(new Vector3f(settings.getWidth(), settings.getHeight(), 1), new Vector3f(1024, 576, 1)));
- *   rootPane.setPreferredSize(controlLayout.getRootPane().getWindow());
- *   rootPane.setLayout(controlLayout);
- *   ControlLayout.setLocationRelativeTo(rootPane.getControl(GuiControl.class), controlLayout.getRootPane());
- *   ...
- *  }
- * }
- * </code></pre> With the definition of the root container, we can add the necessary components to create the user interface.
- *
- * @author wil
- * @version 1.0-SNAPSHOT
- * @since 1.0.0
- */
 public class ControlLayout extends AbstractGuiComponent implements GuiLayout {
 
     /**
@@ -104,29 +66,16 @@ public class ControlLayout extends AbstractGuiComponent implements GuiLayout {
         return (layout instanceof ControlLayout);
     }
 
-    /**
-     * Logger de la clase .
-     */
     private static final Logger LOG = Logger.getLogger(ControlLayout.class.getName());
 
-    /*
-        Constantes a utilizar para establecer los valores de los atributos.
-     */
-    public static final String POSITION = "Position";              // Posición del componente.
-    public static final String ALIGNMENT = "Alignment";             // Alineamiento.
-    public static final String FONT_SIZE = "FontSize";              // Tamaño de la funete(Si exitien de la clase 'Label').
-    public static final String LOCK_SCALING = "Lockscaling";      // Para definir la escala cerrada o libre.
-    public static final String DEPTH_POSITION = "DepthPosition";    // Produndidad del componente.
+    public static final String POSITION = "Position"; 
+    public static final String ALIGNMENT = "Alignment";           
+    public static final String FONT_SIZE = "FontSize";              
+    public static final String LOCK_SCALING = "Lockscaling";      
+    public static final String DEPTH_POSITION = "DepthPosition";
 
-    /**
-     * Mapa de controles encargado de gestionar los componentes de este diseño.
-     */
     private final Map<Node, Control> children = new HashMap<>();
 
-    /**
-     * Un <code>Alignment</code> se encarga de definir un alineamiento para los
-     * componentes que se agregan al diseño {@link ControlLayout}.
-     */
     public static enum Alignment {
 
         /**
