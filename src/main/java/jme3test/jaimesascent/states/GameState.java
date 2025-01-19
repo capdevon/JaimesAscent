@@ -57,9 +57,9 @@ import com.jme3.scene.control.Control;
 import com.jme3.scene.debug.WireBox;
 import jme3test.jaimesascent.GameApplication;
 import jme3test.jaimesascent.KeyMapping;
-import jme3test.jaimesascent.controls.EnterableTrigger;
+import jme3test.jaimesascent.controls.Checkpoint;
 import jme3test.jaimesascent.controls.RotatingControl;
-import jme3test.jaimesascent.controls.TriggerListener;
+import jme3test.jaimesascent.controls.ScriptObject;
 import jme3test.jaimesascent.screen.GameScreen;
 import jme3test.jaimesascent.ui.WindowListener;
 
@@ -136,7 +136,7 @@ public class GameState extends SimpleAppState {
 
     @Override
     public void update(float tpf) {
-        if (playerNode.getWorldTranslation().y < -20) {
+        if (playerNode.getWorldTranslation().y < -20f) {
             physicsCharacter.warp(startPosition);
             chaseCam.setDefaultHorizontalRotation(startRotation);
         }
@@ -232,20 +232,15 @@ public class GameState extends SimpleAppState {
         float size = 1.0f;
         Geometry geo = makeGeometry("Checkpoint", new WireBox(size, size, size), ColorRGBA.Green);
         geo.addControl(new RotatingControl(Vector3f.UNIT_Y));
-
-        EnterableTrigger trigger = new EnterableTrigger();
-        geo.addControl(trigger);
-        trigger.setTarget(playerNode);
-        trigger.addListener(new TriggerListener() {
+        
+        Checkpoint checkpoint = new Checkpoint();
+        checkpoint.setTarget(playerNode);
+        geo.addControl(checkpoint);
+        checkpoint.setActionScript(new ScriptObject() {
             @Override
-            public void onTriggerEnter(EnterableTrigger t) {
-                System.out.println("onTriggerEnter: " + t.getName());
+            public void execute() {
                 startPosition.set(geo.getWorldTranslation());
-                t.destroy();
-            }
-
-            @Override
-            public void onTriggerExit(EnterableTrigger t) {
+                checkpoint.destroy();
             }
         });
         
