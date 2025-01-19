@@ -234,8 +234,8 @@ public class GameState extends SimpleAppState {
         geo.addControl(new RotatingControl(Vector3f.UNIT_Y));
         
         Checkpoint checkpoint = new Checkpoint();
-        checkpoint.setTarget(playerNode);
         geo.addControl(checkpoint);
+        checkpoint.setTarget(playerNode);
         checkpoint.setActionScript(new ScriptObject() {
             @Override
             public void execute() {
