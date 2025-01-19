@@ -64,8 +64,8 @@ public class Main extends GameApplication {
         AppSettings settings = new AppSettings(true);
         settings.setTitle("Jaime Jump: " + JmeVersion.FULL_NAME);
         settings.setResolution(1280, 720);
-        settings.setFrameRate(120);
-        settings.setUseJoysticks(true);
+        settings.setFrameRate(60);
+//        settings.setUseJoysticks(true);
 //        settings.setRenderer(AppSettings.LWJGL_OPENGL32);
 //        settings.setAudioRenderer(AppSettings.LWJGL_OPENAL);
         app.setShowSettings(false);
@@ -100,8 +100,8 @@ public class Main extends GameApplication {
     public void simpleRender(RenderManager rm) {
     }
     
-    protected JmeCursor createJmeCursor(String path) {
-        Texture texture = assetManager.loadTexture(path);
+    protected JmeCursor createJmeCursor(String texturePath) {
+        Texture texture = assetManager.loadTexture(texturePath);
 
         Image image = texture.getImage();
         ByteBuffer imgByteBuff = (ByteBuffer) image.getData(0).rewind();
