@@ -39,6 +39,7 @@ import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.collision.shapes.SphereCollisionShape;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.bullet.objects.PhysicsBody;
+import com.jme3.bullet.util.CollisionShapeFactory;
 import com.jme3.effect.ParticleEmitter;
 import com.jme3.effect.ParticleMesh;
 import com.jme3.effect.shapes.EmitterSphereShape;
@@ -123,12 +124,12 @@ public class SceneState extends SimpleAppState {
 
         Spatial statics = scene.getChild("Statics");
         statics.addControl(new RigidBodyControl(0));
-        statics.getControl(RigidBodyControl.class).setFriction(0.01f);
+        addStaticRigidBody(statics).setFriction(0.01f);
 
         // FIX
         Spatial cube = scene.getChild("Cube.005");
         cube.addControl(new RigidBodyControl(0));
-        cube.getControl(RigidBodyControl.class).setFriction(0.01f);
+        addStaticRigidBody(cube).setFriction(0.01f);
 
         Spatial ballShooter = scene.getChild("BallShooter");
         setupWreckingBall(ballShooter.getLocalTranslation());
@@ -217,19 +218,21 @@ public class SceneState extends SimpleAppState {
     }
 
     private RigidBodyControl addStaticRigidBody(Spatial sp) {
-        RigidBodyControl rb = new RigidBodyControl(PhysicsBody.massForStatic);
+        CollisionShape collShape = CollisionShapeFactory.createMeshShape(sp);
+        RigidBodyControl rb = new RigidBodyControl(collShape, PhysicsBody.massForStatic);
         sp.addControl(rb);
-        rb.setKinematic(true);
         return rb;
     }
 
     private void setupPropeller(Spatial sp, Vector3f rotAxis) {
-        addStaticRigidBody(sp);
+        RigidBodyControl rb = addStaticRigidBody(sp);
+        rb.setKinematic(true);
         sp.addControl(new RotatingControl(rotAxis));
     }
 
     private void setupPlatform(Spatial sp) {
-        addStaticRigidBody(sp);
+        RigidBodyControl rb = addStaticRigidBody(sp);
+        rb.setKinematic(true);
         sp.addControl(new PlatformControl());
     }
 }
