@@ -123,12 +123,10 @@ public class SceneState extends SimpleAppState {
         scene.setShadowMode(ShadowMode.CastAndReceive);
 
         Spatial statics = scene.getChild("Statics");
-        statics.addControl(new RigidBodyControl(0));
         addStaticRigidBody(statics).setFriction(0.01f);
 
         // FIX
         Spatial cube = scene.getChild("Cube.005");
-        cube.addControl(new RigidBodyControl(0));
         addStaticRigidBody(cube).setFriction(0.01f);
 
         Spatial ballShooter = scene.getChild("BallShooter");
