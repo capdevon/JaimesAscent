@@ -42,7 +42,6 @@ import com.jme3.input.ChaseCamera;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
-import com.jme3.input.controls.Trigger;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
@@ -56,7 +55,6 @@ import com.jme3.scene.control.AbstractControl;
 import com.jme3.scene.control.Control;
 import com.jme3.scene.debug.WireBox;
 import jme3test.jaimesascent.GameApplication;
-import jme3test.jaimesascent.KeyMapping;
 import jme3test.jaimesascent.controls.Checkpoint;
 import jme3test.jaimesascent.controls.RotatingControl;
 import jme3test.jaimesascent.controls.ScriptObject;
@@ -78,7 +76,6 @@ public class GameState extends SimpleAppState {
     private BulletAppState physicsState;
     private BetterCharacterControl physicsCharacter;
     private Node playerNode;
-    private PlayerInput playerInput;
     private ChaseCamera chaseCam;
     
     private GameScreen uiScreen;
@@ -157,26 +154,6 @@ public class GameState extends SimpleAppState {
     }
 
     private void setupKeys() {
-        addMapping(KeyMapping.MOVE_LEFT,
-                new KeyTrigger(KeyInput.KEY_A),
-                new KeyTrigger(KeyInput.KEY_LEFT));
-
-        addMapping(KeyMapping.MOVE_RIGHT,
-                new KeyTrigger(KeyInput.KEY_D),
-                new KeyTrigger(KeyInput.KEY_RIGHT));
-
-        addMapping(KeyMapping.MOVE_FORWARD,
-                new KeyTrigger(KeyInput.KEY_W),
-                new KeyTrigger(KeyInput.KEY_UP));
-
-        addMapping(KeyMapping.MOVE_BACKWARD,
-                new KeyTrigger(KeyInput.KEY_S),
-                new KeyTrigger(KeyInput.KEY_DOWN));
-
-        addMapping(KeyMapping.JUMP,
-                new KeyTrigger(KeyInput.KEY_F),
-                new KeyTrigger(KeyInput.KEY_SPACE));
-        
         inputManager.addMapping("Pause", new KeyTrigger(KeyInput.KEY_P));
         inputManager.addListener(new ActionListener() {
             @Override
@@ -186,11 +163,6 @@ public class GameState extends SimpleAppState {
                 }
             }
         }, "Pause");
-    }
-
-    private void addMapping(String mappingName, Trigger... triggers) {
-        inputManager.addMapping(mappingName, triggers);
-        inputManager.addListener(playerInput, mappingName);
     }
 
     private void setupChaseCam(Spatial target) {
@@ -222,9 +194,8 @@ public class GameState extends SimpleAppState {
         playerNode.addControl(physicsCharacter);
         physicsState.getPhysicsSpace().add(physicsCharacter);
 
-        playerInput = new PlayerInput();
         playerNode.addControl(new PlayerControl(cam));
-        playerNode.addControl(playerInput);
+        playerNode.addControl(new PlayerInput(inputManager));
         getRootNode().attachChild(playerNode);
     }
 
