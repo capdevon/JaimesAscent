@@ -21,8 +21,7 @@ repositories {
 }
 
 project.ext {
-    //jmeVer = '3.7.0-stable'
-    jmeVer = '3.8.0-alpha2'
+    jmeVer = '3.7.0-stable'
 }
 
 project(":assets") {
