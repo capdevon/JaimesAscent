@@ -84,9 +84,6 @@ public class PlayerControl extends AbstractControl {
 
     @Override
     public void controlUpdate(float tpf) {
-        if (camera == null) {
-            return;
-        }
         
         camera.getDirection(camDir).setY(0);
         camera.getLeft(camLeft).setY(0);
