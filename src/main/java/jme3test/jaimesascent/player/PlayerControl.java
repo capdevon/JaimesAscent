@@ -66,9 +66,6 @@ public class PlayerControl extends AbstractControl {
 
     private String currentAnimation = "";
 
-    public PlayerControl() {
-    }
-
     public PlayerControl(Camera cam) {
         this.camera = cam;
     }
@@ -150,14 +147,6 @@ public class PlayerControl extends AbstractControl {
     public void jump() {
         bcc.jump();
         setAnimation("JumpStart");
-    }
-
-    public Camera getCamera() {
-        return camera;
-    }
-
-    public void setCamera(Camera cam) {
-        this.camera = cam;
     }
 
     public float getMoveSpeed() {
