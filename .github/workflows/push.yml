@@ -5,7 +5,7 @@ name: CI at GitHub
 on: [push]
 
 jobs:
-  Java11-Linux:
+  Java17-Linux:
     if: contains(toJson(github.event.commits), '[ci skip] ') == false
     runs-on: ubuntu-22.04
     steps:
@@ -18,7 +18,7 @@ jobs:
       - run: chmod +x gradlew
       - run: ./gradlew javadoc build --console=plain --no-daemon --stacktrace
 
-  Java11-MacOS:
+  Java17-MacOS:
     if: contains(toJson(github.event.commits), '[ci skip] ') == false
     runs-on: macOS-15
     steps:
@@ -30,7 +30,7 @@ jobs:
       - run: chmod +x gradlew
       - run: ./gradlew javadoc build --console=plain --no-daemon --stacktrace
 
-  Java11-Windows:
+  Java17-Windows:
     if: contains(toJson(github.event.commits), '[ci skip] ') == false
     runs-on: windows-2025
     steps:
