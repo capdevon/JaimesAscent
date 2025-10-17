@@ -58,7 +58,7 @@ dependencies {
     runtimeOnly 'org.jmonkeyengine:jme3-testdata:3.4.0-alpha6'
     
     // Additional Libraries
-    implementation 'com.github.stephengold:Minie:8.2.0+big4'
+    implementation 'com.github.stephengold:Minie:9.0.1+big4'
     
     // GUI Libraries
     implementation 'com.simsilica:lemur:1.16.0'
