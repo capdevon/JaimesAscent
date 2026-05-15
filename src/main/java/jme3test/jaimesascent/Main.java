@@ -86,7 +86,7 @@ public class Main extends GameApplication {
         LemurGuiStyle.initialize(this);
 
         stateManager.attach(new BulletAppState());
-        stateManager.attach(new PhysxDebugState());
+        stateManager.attach(new TogglePhysicsDebugState());
         stateManager.attach(new GameScreen());
         stateManager.attach(new SceneState());
         stateManager.attach(new GameState());
